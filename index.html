@@ -3,12 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>As Seen On TikTok - Special Offer</title>
+    <title>Trending Skincare Find - As Seen On TikTok</title>
     <style>
         :root {
             --primary-color: #FF9900; /* Amazon Orange */
-            --dark-color: #111;
-            --light-bg: #f6f6f6;
+            --tiktok-pink: #FE2C55;
+            --dark-color: #1A1A1A;
+            --light-bg: #FAFAFA;
+            --accent-bg: #F4F0EB; /* Soft skincare neutral tone */
         }
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -19,58 +21,137 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            -webkit-font-smoothing: antialiased;
         }
         .container {
             max-width: 450px;
             width: 100%;
             background: #ffffff;
             min-height: 100vh;
-            box-shadow: 0 0 10px rgba(0,0,0,0.05);
-            padding: 20px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.05);
+            padding: 0 0 100px 0; /* Extra space at bottom for sticky button */
             box-sizing: border-box;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
         }
-        .header {
+        .tiktok-banner {
+            background-color: #000000;
+            color: #ffffff;
             text-align: center;
-            font-size: 14px;
+            padding: 10px;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+        .tiktok-banner span {
+            color: var(--tiktok-pink);
+        }
+        .content-padding {
+            padding: 20px;
+        }
+        .brand-badge {
+            background: var(--accent-bg);
+            color: #555;
+            font-size: 11px;
+            font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 1px;
-            color: #777;
-            margin-bottom: 10px;
+            padding: 4px 10px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-bottom: 12px;
         }
         .product-title {
-            font-size: 22px;
-            font-weight: 700;
-            text-align: center;
-            margin: 10px 0 20px 0;
-            line-height: 1.3;
+            font-size: 24px;
+            font-weight: 800;
+            line-height: 1.25;
+            margin: 0 0 15px 0;
+            color: var(--dark-color);
+        }
+        .rating-row {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            color: #555;
+        }
+        .stars {
+            color: #FFA41C;
+            font-size: 16px;
         }
         .image-container {
             width: 100%;
-            border-radius: 12px;
+            border-radius: 16px;
             overflow: hidden;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
         }
         .image-container img {
             width: 100%;
             display: block;
         }
-        .highlights {
-            background: #f9f9f9;
+        .promo-pulse {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--tiktok-pink);
+            margin-bottom: 15px;
+        }
+        .pulse-dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--tiktok-pink);
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(254, 44, 85, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(254, 44, 85, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(254, 44, 85, 0); }
+        }
+        .ingredient-grid {
+            background: #F9F9F9;
+            border-radius: 12px;
             padding: 15px;
-            border-radius: 8px;
             margin-bottom: 25px;
-            border-left: 4px solid var(--primary-color);
         }
-        .highlights ul {
-            margin: 0;
-            padding-left: 20px;
+        .ingredient-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 12px;
         }
-        .highlights li {
-            margin-bottom: 8px;
+        .ingredient-item:last-child {
+            margin-bottom: 0;
+        }
+        .icon {
+            font-size: 18px;
+            margin-top: -2px;
+        }
+        .ingredient-text h4 {
+            margin: 0 0 2px 0;
             font-size: 15px;
+            font-weight: 700;
+        }
+        .ingredient-text p {
+            margin: 0;
+            font-size: 13px;
+            color: #666;
+            line-height: 1.4;
+        }
+        .sticky-footer {
+            position: fixed;
+            bottom: 0;
+            max-width: 450px;
+            width: 100%;
+            background: #ffffff;
+            padding: 15px 20px;
+            box-shadow: 0 -5px 15px rgba(0,0,0,0.05);
+            box-sizing: border-box;
+            z-index: 1000;
         }
         .cta-button {
             display: block;
@@ -78,53 +159,87 @@
             color: white;
             text-align: center;
             padding: 16px;
-            font-size: 18px;
-            font-weight: bold;
+            font-size: 16px;
+            font-weight: 700;
             text-decoration: none;
-            border-radius: 30px;
-            box-shadow: 0 4px 15px rgba(255, 153, 0, 0.3);
-            transition: transform 0.2s;
-        }
-        .cta-button:active {
-            transform: scale(0.98);
+            border-radius: 50px;
+            box-shadow: 0 4px 12px rgba(255, 153, 0, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
         .disclaimer {
             font-size: 11px;
             color: #888;
             text-align: center;
-            margin-top: 40px;
-            line-height: 1.4;
+            line-height: 1.5;
+            padding: 0 20px 20px 20px;
+            margin-top: auto;
         }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <div>
-            <div class="header">🔥 Trending On TikTok</div>
-            <h1 class="product-title">Replace This With Your Catchy Product Title</h1>
+        <!-- App Alignment Header -->
+        <div class="tiktok-banner">🔥 AS SEEN ON <span>TIKTOK</span></div>
+        
+        <div class="content-padding">
+            <span class="brand-badge">SimplyVital Skincare</span>
+            <h1 class="product-title">Premium Face Moisturizer Cream (1.7 oz)</h1>
             
+            <div class="rating-row">
+                <span class="stars">★★★★★</span>
+                <span><b>Top Rated</b> for Anti-Aging & Deep Hydration</span>
+            </div>
+
+            <!-- Main Conversion Graphic -->
             <div class="image-container">
-                <!-- Replace URL below with a high-quality product image or GIF -->
-                <img src="https://placeholder.com" alt="Product Image">
+                <!-- Pro-Tip: Replace this with an actual screenshot or GIF from a viral review video -->
+                <img src="https://unsplash.com" alt="SimplyVital Face Cream">
             </div>
 
-            <div class="highlights">
-                <ul>
-                    <li>💥 <b>Top Benefit:</b> Why did it go viral on TikTok?</li>
-                    <li>✨ <b>Key Feature:</b> What problem does it solve instantly?</li>
-                    <li>🚀 <b>Urgency:</b> Limited stock or current discount on Amazon.</li>
-                </ul>
+            <div class="promo-pulse">
+                <div class="pulse-dot"></div>
+                <span>Trending Fast: Limited Stock Available on Amazon</span>
             </div>
 
-            <!-- Paste your actual Amazon Associate Link in the href below -->
-            <a href="YOUR_AMAZON_ASSOCIATE_LINK_HERE" target="_blank" class="cta-button">
-                Check Price on Amazon →
-            </a>
+            <!-- 3-In-1 Power Formulas -->
+            <div class="ingredient-grid">
+                <div class="ingredient-item">
+                    <span class="icon">✨</span>
+                    <div class="ingredient-text">
+                        <h4>Retinol (Anti-Aging)</h4>
+                        <p>Accelerates skin surface renewal to visibly smooth wrinkles, fine lines, and dark spots.</p>
+                    </div>
+                </div>
+                <div class="ingredient-item">
+                    <span class="icon">💧</span>
+                    <div class="ingredient-text">
+                        <h4>Hyaluronic Acid (Max Hydration)</h4>
+                        <p>Draws intense moisture into the skin barrier to lock in a plump, dewy glow all day long.</p>
+                    </div>
+                </div>
+                <div class="ingredient-item">
+                    <span class="icon">🧬</span>
+                    <div class="ingredient-text">
+                        <h4>Collagen (Firming & Elasticity)</h4>
+                        <p>Supports natural cellular architecture to lift sagging skin and restore bounce.</p>
+                    </div>
+                </div>
+            </div>
         </div>
 
+        <!-- Mandatory Amazon Associates Disclaimer Placement -->
         <div class="disclaimer">
-            As an Amazon Associate, I earn from qualifying purchases. This means if you click through and make a purchase, I may receive a small commission at no extra cost to you.
+            As an Amazon Associate, I earn from qualifying purchases. If you click through this landing page and complete a purchase on Amazon, I may receive a small tracking commission at absolutely zero additional cost to you.
+        </div>
+
+        <!-- Sticky Floating Mobile Button -->
+        <div class="sticky-footer">
+            <!-- PASTE YOUR EXACT AMAZON ASSOCIATES TRACKING LINK IN THE HREF BELOW -->
+            <a href="YOUR_AMAZON_ASSOCIATE_LINK_HERE" target="_blank" class="cta-button">
+                Shop This Deal On Amazon →
+            </a>
         </div>
     </div>
 
